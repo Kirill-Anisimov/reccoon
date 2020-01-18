@@ -1,4 +1,4 @@
-import csv
+import pandas as pd
 import os
 
 
@@ -15,12 +15,9 @@ def allowed_file(filename):
 # Make string from csv header
 def create_query_by_header(file):
     query_start = 'CREATE TABLE RawData_' + file.rsplit('.', 1)[0] + ' ("RawData_Key" INTEGER PRIMARY KEY'
-    with open(os.path.join(UPLOAD_FOLDER, file), 'r') as csv_file:
-        reader = csv.DictReader(csv_file)
-        field_names = reader.fieldnames
-        for field in field_names:
-            query_start = query_start + ', ' + '"{}"'.format(field) + ' TEXT'
-        csv_file.close()
+    df = pd.read_csv(os.path.join(UPLOAD_FOLDER, file))
+    for field in list(df.columns.values):
+        query_start = query_start + ', ' + '"{}"'.format(field) + ' TEXT'
     query_end = ');'
     query = query_start + query_end
     return query
@@ -39,9 +36,5 @@ def delete_from_upload_folder(file_name):
 
 # Count how many rows csv file has except header
 def count_rows(file):
-    count = -1
-    with open(file, 'r') as csv_file:
-        reader = csv.reader(csv_file)
-        for row in reader:
-            count += 1
-    return count
+    df = pd.read_csv(os.path.join(UPLOAD_FOLDER, file))
+    return df.shape[0]
