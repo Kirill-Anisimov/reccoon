@@ -1,2 +1,2 @@
 # Reccoon
-Demo app > File processing (Flask + sqlite3)
+Demo app > File processing (Flask + sqlite3 + pandas)
