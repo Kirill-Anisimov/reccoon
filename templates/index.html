@@ -8,22 +8,31 @@
         <style>
             ul { list-style-type: none; }
         </style>
+        <link rel="stylesheet" type="text/css" href= "{{ url_for('static',filename='styles/styles.css') }}">
+        <script type="text/javascript" src="{{ url_for('static', filename='javascript/menu.js') }}"></script>
     </head>
     <body>
-        <div>
-            <h1>Upload new CSV File</h1>
-            <form action="upload" method="post" enctype="multipart/form-data">
-                <input type="file" name="file">
-                <input type="submit" value="Upload file">
-            </form>
-        </div>
-        <div>
-            <h1>Uploaded Files</h1>
-            <ul>
-                {% for name in file_names %}
-                <li style="font-size: 15pt"> {{name[0]}} <a href="../raw-data/{{name[0]}}"> {{name[1]}} </a></li>
-                {% endfor %}
-            </ul>
+        <div id="sidebar-left">
+            <div class="toggle-button" onclick="toggleSidebar()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="sidebar-left-block">
+                <h1>Upload new CSV File</h1>
+                <form action="upload" method="post" enctype="multipart/form-data">
+                    <input type="file" name="file">
+                    <input type="submit" value="Upload file">
+                </form>
+            </div>
+            <div class="sidebar-left-block">
+                <h1>Uploaded Files</h1>
+                <ul>
+                    {% for name in file_names %}
+                    <li style="font-size: 15pt"> {{name[0]}} <a href="../raw-data/{{name[0]}}"> {{name[1]}} </a></li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
     </body>
 </html>
